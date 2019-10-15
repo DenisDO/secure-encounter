@@ -1,0 +1,53 @@
+header {
+    height: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-image: linear-gradient(to bottom, #011826, #023859);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+    .logo {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        .logo_icon {
+            height: 24px;
+            margin: 12px;
+            margin-right: 8px;
+        }
+
+        .logo_text_container {
+            display: flex;
+
+            .logo_text {
+                font-size: 1.25em;
+                font-weight: 800;
+            }
+
+            .primary {
+                color: #9AAFBB;
+            }
+            
+            .secondary {
+                color: #F1EBF2;
+            }
+        }
+    }
+
+    .menu {
+        .menu_item:hover {
+            cursor: pointer;
+        }
+
+        .menu_burger {
+            height: 48px;
+            margin-right: 5px;
+        }
+
+        .menu_logout {
+            height: 22px;
+            margin: 20px 17px 13px 13px;
+        }
+    }
+}

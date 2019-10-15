@@ -1,0 +1,81 @@
+.users_list_page_container {
+    height: 100%;
+    padding: 10px 20px;
+    box-sizing: border-box;
+
+    .users_list {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: flex-start;
+        background-color: white;
+        padding: 10px 20px;
+        margin-bottom: 10px;
+
+        .users_list_title_container {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 20px;
+
+            img {
+                margin-right: 10px;
+            }
+
+            h1 {
+                font-size: 12pt;
+                font-weight: 600;
+            }
+        }
+
+        .users_list_content_container {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+
+            .user_item {
+                position: relative;
+                width: 120px;
+                margin-right: 20px;
+
+                &:last-child {
+                    margin-right: 0;
+                }
+
+                &:hover {
+                    cursor: pointer;
+
+                    .user_item_overlay {
+                        opacity: 1;
+                    }
+                }
+
+                .user_item_img {
+                    display: block;
+                    width: 100%;
+                }
+
+                .user_item_overlay {
+                    position: absolute;
+                    bottom: 0;
+                    height: 30px;
+                    width: 100%;
+                    opacity: 0;
+                    transition: .5s ease;
+                    background-color: #00000030;
+
+                    .user_item_content {
+                        color: white;
+                        font-size: 6pt;
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
+}

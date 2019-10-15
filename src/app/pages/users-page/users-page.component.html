@@ -1,0 +1,20 @@
+<section class="users_page_container">
+    <header>
+        <nav *ngIf="router.url === '/users/list'" class="users_page_navigation">
+            <img [routerLink]="['/home']" src="../../../assets/images/home.svg" alt="home">
+            <a href="javascript:void(0);">
+                <img src="../../../assets/images/Add-icon.png" alt="add">
+                Add New Patient
+            </a>
+        </nav>
+        <nav *ngIf="router.url === '/users/details'" class="user_details_navigation">
+            PREV PAGE
+        </nav>
+        <nav class="users_page_search">
+            <input type="text" placeholder="Search" name="search">
+        </nav>
+    </header>
+    <main>
+        <router-outlet></router-outlet>
+    </main>
+</section>

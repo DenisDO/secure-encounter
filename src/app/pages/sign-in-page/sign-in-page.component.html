@@ -1,0 +1,35 @@
+<section class="signin_page_container">
+  <div class="container_striped"></div>
+  <div class="container_main">
+
+    <main>
+      <div class="signin_card_container">
+        <form [formGroup]="signInForm" (submit)="signIn($event)">
+          <div class="card_header">
+            <h1>Sign In</h1>
+          </div>
+
+          <div class="card_fields">
+            <input type="text" placeholder="Client ID" formControlName="uid" required>
+            <input type="text" placeholder="User Name" formControlName="email" required>
+            <input type="password" placeholder="Password" formControlName="password" required>
+            <label class="checkbox_label">
+              <input type="checkbox" checked="checked" name="remember">Remember me on this computer
+            </label>
+            <button type="submit" [disabled]="signInForm.status === 'INVALID'">Sign In</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="forgot_psw_container">
+        <a href="javascript:void(0);">Forgot your username or password?</a>
+      </div>
+    </main>
+
+    <footer class="rights_container">
+      <span>© 2020 Bridgewing Technologies. All Rights Reserved.</span> | <span><a href="javascript:void(0);">Terms of
+          Use</a> and <a href="javascript:void(0);">Policy Statements</a></span>
+    </footer>
+
+  </div>
+</section>

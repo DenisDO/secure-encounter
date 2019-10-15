@@ -1,0 +1,101 @@
+.signin_page_container {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+
+    .container_striped {
+        background: url(../../../assets/images/subtle_stripes.png);
+    }
+
+    .container_main {
+        background-color: #F1F2EB;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            top: -30%;
+
+            .signin_card_container {
+                background-color: #F1F2EB;
+                box-shadow: 0 0 5px #00000069;
+                border-radius: 5px;
+                width: 360px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                align-items: center;
+                padding: 20px;
+                margin-bottom: 20px;
+
+                .card_header {
+                    text-align: center;
+                    margin-bottom: 10px;
+
+                    h1 {
+                        font-size: 1.2em;
+                        font-weight: 800;
+                    }
+                }
+
+                .card_fields {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-around;
+                    align-items: center;
+
+                    & > input {
+                        width: 280px;
+                        height: 35px;
+                        padding: 5px;
+                        box-sizing: border-box;
+                        margin-bottom: 15px;
+                        border: none;
+                        box-shadow: 0 1px 2px #0000003a;
+
+                        &::-webkit-input-placeholder {
+                            font-style: italic;
+                        }
+                    }
+
+                    .checkbox_label {
+                        margin-bottom: 20px;
+                    }
+
+                    button {
+                        background-color: #84b13f;
+                        color: white;
+                        border: none;
+                        padding: 10px;
+                        box-sizing: border-box;
+                        width: 100px;
+                        border-radius: 5px;
+
+                        &:hover:not(:disabled) {
+                            box-shadow: 0 0 3px #00000069;
+                            cursor: pointer;
+                        }
+
+                        &:disabled {
+                            background-color: #777777;
+                        }
+                    }
+                }
+            }
+
+            .forgot_psw_container a {
+                color: #84b13f;
+            }
+        }
+
+        .rights_container {
+            padding: 10px;
+            font-size: 0.7em;
+        }
+    }
+}

@@ -1,0 +1,18 @@
+<section class="users_list_page_container">
+    <div class="users_list">
+        <div class="users_list_title_container">
+            <img src="../../../../assets/images/Temporary.png" alt="user icon">
+            <h1>Scheduled Appointments</h1>
+        </div>
+        <div class="users_list_content_container">
+            <div *ngFor="let patient of patients" class="user_item" (click)="selectUser(patient)">
+                <div *ngIf="patient.imageData; then imageData else defaultImage"></div>
+                <ng-template #imageData><img src="patient.imageData" alt="Avatar" class="user_item_img"></ng-template>
+                <ng-template #defaultImage><img src="../../../../assets/images/Bust-Female-124x124.png" alt="Avatar" class="user_item_img"></ng-template>
+                <div class="user_item_overlay">
+                    <div class="user_item_content">{{ patient.firstName }} {{ patient.lastName }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

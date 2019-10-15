@@ -1,0 +1,16 @@
+<header>
+  <div class="logo" [routerLink]="['/home']">
+    <img class="logo_icon" src="../../../assets/images/lock-orange.svg" alt="logo">
+    <div class="logo_text_container">
+      <h1 class="logo_text primary">Secure</h1>
+      <h1 class="logo_text secondary">Encounter</h1>
+    </div>
+  </div>
+
+  <div class="menu">
+    <img class="menu_item menu_burger" *ngIf="router.url === '/home'" src="../../../assets/images/Hamburger-white.svg"
+      alt="menu">
+    <img class="menu_item menu_logout" (click)="signOut()" *ngIf="router.url !== '/home'"
+      src="../../../assets/images/Logout-white.svg" alt="exit">
+  </div>
+</header>

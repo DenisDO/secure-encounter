@@ -5,7 +5,7 @@ import { SignInComponent } from './pages/sign-in-page/sign-in-page.component';
 import { UsersComponent } from './pages/users-page/users-page.component';
 import { UserDetailsComponent } from './pages/users-page/user-details/user-details.component';
 import { UsersListComponent } from './pages/users-page/users-list/users-list.component';
-import { CanActivateApplicationPage } from './core/guards/auth.guard';
+import { CanActivateApplicationPage, CanActivateUserDetails } from './core/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -28,7 +28,8 @@ const routes: Routes = [
       },
       {
         path: 'details',
-        component: UserDetailsComponent
+        component: UserDetailsComponent,
+        canActivate: [CanActivateUserDetails]
       }
     ]
   },

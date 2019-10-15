@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UsersPageService } from '../users-page.service';
+import { IPatient } from 'src/app/shared/interfaces/patient.interface';
 
 @Component({
     selector: 'app-user-details',
@@ -6,8 +8,12 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./user-details.component.scss']
 })
 export class UserDetailsComponent implements OnInit {
-    constructor() {}
+    constructor(
+        private userPageService: UsersPageService
+    ) {}
+    public currentUser: IPatient;
 
     ngOnInit(): void {
+        this.currentUser = this.userPageService.selectedUser;
     }
 }

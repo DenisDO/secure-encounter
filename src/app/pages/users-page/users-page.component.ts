@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { IPatient } from 'src/app/shared/interfaces/patient.interface';
+import { UsersPageService } from './users-page.service';
 
 @Component({
     selector: 'app-users',
@@ -8,9 +10,18 @@ import { Router } from '@angular/router';
 })
 export class UsersComponent implements OnInit {
     constructor(
-        public router: Router
+        public router: Router,
+        private activatedRoute: ActivatedRoute,
+        private userPageService: UsersPageService
     ) {}
 
+    public currentUser: IPatient;
+
     ngOnInit(): void {
+        this.activatedRoute.url.subscribe(() => {
+            if (this.router.url === '/users/details') {
+                this.currentUser = this.userPageService.selectedUser;
+            }
+        });
     }
 }

@@ -14,8 +14,8 @@ import { UserDetailsComponent } from './pages/users-page/user-details/user-detai
 import { UsersListComponent } from './pages/users-page/users-list/users-list.component';
 
 import { AuthService } from './shared/services/auth.service';
-import { CanActivateApplicationPage } from './core/guards/auth.guard';
-import { UsersListService } from './pages/users-page/users-list/users-list.service';
+import { CanActivateApplicationPage, CanActivateUserDetails } from './core/guards/auth.guard';
+import { UsersPageService } from './pages/users-page/users-page.service';
 
 @NgModule({
   declarations: [
@@ -36,8 +36,9 @@ import { UsersListService } from './pages/users-page/users-list/users-list.servi
   ],
   providers: [
     AuthService,
-    UsersListService,
-    CanActivateApplicationPage
+    UsersPageService,
+    CanActivateApplicationPage,
+    CanActivateUserDetails
   ],
   bootstrap: [AppComponent]
 })

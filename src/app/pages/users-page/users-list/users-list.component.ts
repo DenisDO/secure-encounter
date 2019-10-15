@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { UsersListService } from './users-list.service';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { IUsersListResponse, IPatient } from 'src/app/shared/interfaces/patient.interface';
+import { UsersPageService } from '../users-page.service';
 
 @Component({
     selector: 'app-users-list',
@@ -9,19 +9,19 @@ import { IUsersListResponse, IPatient } from 'src/app/shared/interfaces/patient.
 })
 export class UsersListComponent implements OnInit {
     constructor(
-        private usersListService: UsersListService
+        private usersPageService: UsersPageService
     ) { }
 
     public patients: IPatient[];
 
     ngOnInit(): void {
-        this.usersListService.getPatientsList()
+        this.usersPageService.getPatientsList()
             .subscribe((resp: IUsersListResponse) => {
                 this.patients = resp.payload.pageData;
             });
     }
 
     public selectUser(patient: IPatient): void {
-        console.log(patient);
+        this.usersPageService.openUserDetails(patient);
     }
 }

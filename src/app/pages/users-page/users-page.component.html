@@ -7,11 +7,11 @@
                 Add New Patient
             </a>
         </nav>
-        <nav *ngIf="router.url === '/users/details'" class="user_details_navigation">
-            PREV PAGE
+        <nav *ngIf="router.url === '/users/details' && currentUser" class="user_details_navigation">
+            <span><</span> <span>{{ currentUser.firstName }} {{ currentUser.lastName }}</span>
         </nav>
         <nav class="users_page_search">
-            <input type="text" placeholder="Search" name="search">
+            <input *ngIf="router.url === '/users/list'" type="text" placeholder="Search" name="search">
         </nav>
     </header>
     <main>

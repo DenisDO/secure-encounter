@@ -59,7 +59,7 @@ export class UsersPageService {
     private getParams(): HttpParams {
         return new HttpParams({
             fromObject: {
-                maximumRows: '6',
+                maximumRows: '7',
                 startRowIndex: '0'
             }
         });

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IUsersListResponse, IPatient } from 'src/app/shared/interfaces/patient.interface';
 import { UsersPageService } from '../users-page.service';
 
@@ -13,11 +13,16 @@ export class UsersListComponent implements OnInit {
     ) { }
 
     public patients: IPatient[];
+    public appointments: IPatient[];
 
     ngOnInit(): void {
         this.usersPageService.getPatientsList()
             .subscribe((resp: IUsersListResponse) => {
                 this.patients = resp.payload.pageData;
+            });
+        this.usersPageService.getAppointmentsList()
+            .subscribe((resp: IUsersListResponse) => {
+                this.appointments = resp.payload.pageData;
             });
     }
 

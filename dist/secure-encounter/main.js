@@ -514,7 +514,7 @@ var UserDetailsComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"users_list_page_container\">\r\n    <div class=\"users_list\">\r\n        <div class=\"users_list_title_container\">\r\n            <img src=\"../../../../assets/images/Temporary.png\" alt=\"user icon\">\r\n            <h1>Scheduled Appointments</h1>\r\n        </div>\r\n        <div class=\"users_list_content_container\">\r\n            <div *ngFor=\"let patient of patients\" class=\"user_item\" (click)=\"selectUser(patient)\">\r\n                <div *ngIf=\"patient.imageData; then imageData else defaultImage\"></div>\r\n                <ng-template #imageData><img src=\"patient.imageData\" alt=\"Avatar\" class=\"user_item_img\"></ng-template>\r\n                <ng-template #defaultImage><img src=\"../../../../assets/images/Bust-Female-124x124.png\" alt=\"Avatar\" class=\"user_item_img\"></ng-template>\r\n                <div class=\"user_item_overlay\">\r\n                    <div class=\"user_item_content\">{{ patient.firstName }} {{ patient.lastName }}</div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</section>\r\n"
+module.exports = "<section class=\"users_list_page_container\">\r\n    <div class=\"users_list\">\r\n        <div class=\"users_list_title_container\">\r\n            <img src=\"../../../../assets/images/Temporary.png\" alt=\"user icon\">\r\n            <h1>Scheduled Appointments</h1>\r\n        </div>\r\n        <div class=\"users_list_content_container\">\r\n            <div *ngFor=\"let patient of appointments\" class=\"user_item\" (click)=\"selectUser(patient)\">\r\n                <div *ngIf=\"patient.imageData; then imageData else defaultImage\"></div>\r\n                <ng-template #imageData><img src=\"patient.imageData\" alt=\"Avatar\" class=\"user_item_img\"></ng-template>\r\n                <ng-template #defaultImage><img src=\"../../../../assets/images/Bust-{{ patient.gender }}-124x124.png\" alt=\"Avatar\" class=\"user_item_img\"></ng-template>\r\n                <div class=\"user_item_overlay\">\r\n                    <div class=\"user_item_content\">{{ patient.firstName }} {{ patient.lastName }}</div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"users_list\">\r\n        <div class=\"users_list_title_container\">\r\n            <img src=\"../../../../assets/images/Temporary.png\" alt=\"user icon\">\r\n            <h1>Patients</h1>\r\n        </div>\r\n        <div class=\"users_list_content_container\">\r\n            <div *ngFor=\"let patient of patients\" class=\"user_item\" (click)=\"selectUser(patient)\">\r\n                <div *ngIf=\"patient.imageData; then imageData else defaultImage\"></div>\r\n                <ng-template #imageData><img src=\"patient.imageData\" alt=\"Avatar\" class=\"user_item_img\"></ng-template>\r\n                <ng-template #defaultImage><img src=\"../../../../assets/images/Bust-{{ patient.gender }}-124x124.png\" alt=\"Avatar\" class=\"user_item_img\"></ng-template>\r\n                <div class=\"user_item_overlay\">\r\n                    <div class=\"user_item_content\">{{ patient.firstName }} {{ patient.lastName }}</div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</section>\r\n"
 
 /***/ }),
 
@@ -555,6 +555,10 @@ var UsersListComponent = /** @class */ (function () {
             .subscribe(function (resp) {
             _this.patients = resp.payload.pageData;
         });
+        this.usersPageService.getAppointmentsList()
+            .subscribe(function (resp) {
+            _this.appointments = resp.payload.pageData;
+        });
     };
     UsersListComponent.prototype.selectUser = function (patient) {
         this.usersPageService.openUserDetails(patient);
@@ -581,7 +585,7 @@ var UsersListComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"users_page_container\">\r\n    <header>\r\n        <nav *ngIf=\"router.url === '/users/list'\" class=\"users_page_navigation\">\r\n            <img [routerLink]=\"['/home']\" src=\"../../../assets/images/home.svg\" alt=\"home\">\r\n            <a href=\"javascript:void(0);\">\r\n                <img src=\"../../../assets/images/Add-icon.png\" alt=\"add\">\r\n                Add New Patient\r\n            </a>\r\n        </nav>\r\n        <nav *ngIf=\"router.url === '/users/details' && currentUser\" class=\"user_details_navigation\">\r\n            <span><</span> <span>{{ currentUser.firstName }} {{ currentUser.lastName }}</span>\r\n        </nav>\r\n        <nav class=\"users_page_search\">\r\n            <input *ngIf=\"router.url === '/users/list'\" type=\"text\" placeholder=\"Search\" name=\"search\">\r\n        </nav>\r\n    </header>\r\n    <main>\r\n        <router-outlet></router-outlet>\r\n    </main>\r\n</section>\r\n"
+module.exports = "<section class=\"users_page_container\">\r\n    <header>\r\n        <nav *ngIf=\"router.url === '/users/list'\" class=\"users_page_navigation\">\r\n            <img [routerLink]=\"['/home']\" src=\"../../../assets/images/home.svg\" alt=\"home\">\r\n            <a href=\"javascript:void(0);\">\r\n                <img src=\"../../../assets/images/Add-icon.png\" alt=\"add\">\r\n                Add New Patient\r\n            </a>\r\n        </nav>\r\n        <nav *ngIf=\"router.url === '/users/details' && currentUser\" class=\"user_details_navigation\">\r\n            <span class=\"arrow_back\" (click)=\"goBack()\"><</span>\r\n            <img src=\"../../../assets/images/Bust-{{ currentUser.gender }}-124x124.png\" alt=\"\">\r\n            <span class=\"user_name\">{{ currentUser.firstName }} {{ currentUser.lastName }}</span>\r\n        </nav>\r\n        <nav class=\"users_page_search\">\r\n            <input *ngIf=\"router.url === '/users/list'\" type=\"text\" placeholder=\"Search\" name=\"search\">\r\n        </nav>\r\n    </header>\r\n    <main>\r\n        <router-outlet></router-outlet>\r\n    </main>\r\n</section>\r\n"
 
 /***/ }),
 
@@ -592,7 +596,7 @@ module.exports = "<section class=\"users_page_container\">\r\n    <header>\r\n  
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".users_page_container {\n  height: 100%; }\n  .users_page_container header {\n    width: 100%; }\n  .users_page_container header nav {\n      height: 48px; }\n  .users_page_container header nav.users_page_navigation {\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      background-color: #F1F2EB;\n      padding: 0 12px; }\n  .users_page_container header nav.users_page_navigation > img {\n        height: 20px; }\n  .users_page_container header nav.users_page_navigation > img:hover {\n          cursor: pointer; }\n  .users_page_container header nav.users_page_navigation a {\n        font-size: 10pt;\n        color: #84b13f; }\n  .users_page_container header nav.users_page_navigation a img {\n          height: 13px; }\n  .users_page_container header nav.users_page_search {\n      display: flex;\n      justify-content: center;\n      background-color: #03658C; }\n  .users_page_container header nav.users_page_search input {\n        width: 430px;\n        border: none;\n        border-radius: 50px;\n        margin: 7px;\n        padding: 10px;\n        box-sizing: border-box; }\n  .users_page_container header nav.users_page_search input::-webkit-input-placeholder {\n          font-style: italic; }\n  .users_page_container main {\n    height: 100%;\n    background-color: #E6E6E6; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvdXNlcnMtcGFnZS9FOlxcV0VCXFxUZXN0X3Rhc2tzXFxzZWN1cmUtZW5jb3VudGVyL3NyY1xcYXBwXFxwYWdlc1xcdXNlcnMtcGFnZVxcdXNlcnMtcGFnZS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLFlBQVksRUFBQTtFQURoQjtJQUlRLFdBQVcsRUFBQTtFQUpuQjtNQU9ZLFlBQVksRUFBQTtFQVB4QjtNQVdZLGFBQWE7TUFDYiw4QkFBOEI7TUFDOUIsbUJBQW1CO01BQ25CLHlCQUF5QjtNQUN6QixlQUFlLEVBQUE7RUFmM0I7UUFrQmdCLFlBQVksRUFBQTtFQWxCNUI7VUFxQm9CLGVBQWUsRUFBQTtFQXJCbkM7UUEwQmdCLGVBQWU7UUFDZixjQUFjLEVBQUE7RUEzQjlCO1VBOEJvQixZQUFZLEVBQUE7RUE5QmhDO01Bb0NZLGFBQWE7TUFDYix1QkFBdUI7TUFDdkIseUJBQXlCLEVBQUE7RUF0Q3JDO1FBeUNnQixZQUFZO1FBQ1osWUFBWTtRQUNaLG1CQUFtQjtRQUNuQixXQUFXO1FBQ1gsYUFBYTtRQUNiLHNCQUFzQixFQUFBO0VBOUN0QztVQWlEb0Isa0JBQWtCLEVBQUE7RUFqRHRDO0lBd0RRLFlBQVk7SUFDWix5QkFBeUIsRUFBQSIsImZpbGUiOiJzcmMvYXBwL3BhZ2VzL3VzZXJzLXBhZ2UvdXNlcnMtcGFnZS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi51c2Vyc19wYWdlX2NvbnRhaW5lciB7XHJcbiAgICBoZWlnaHQ6IDEwMCU7XHJcblxyXG4gICAgaGVhZGVyIHtcclxuICAgICAgICB3aWR0aDogMTAwJTtcclxuXHJcbiAgICAgICAgbmF2IHtcclxuICAgICAgICAgICAgaGVpZ2h0OiA0OHB4O1xyXG4gICAgICAgIH1cclxuXHJcbiAgICAgICAgbmF2LnVzZXJzX3BhZ2VfbmF2aWdhdGlvbiB7XHJcbiAgICAgICAgICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICAgICAgICAgIGp1c3RpZnktY29udGVudDogc3BhY2UtYmV0d2VlbjtcclxuICAgICAgICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAgICAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogI0YxRjJFQjtcclxuICAgICAgICAgICAgcGFkZGluZzogMCAxMnB4O1xyXG5cclxuICAgICAgICAgICAgJiA+IGltZyB7XHJcbiAgICAgICAgICAgICAgICBoZWlnaHQ6IDIwcHg7XHJcbiAgICAgICAgICAgIFxyXG4gICAgICAgICAgICAgICAgJjpob3ZlciB7XHJcbiAgICAgICAgICAgICAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xyXG4gICAgICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICB9XHJcblxyXG4gICAgICAgICAgICBhIHtcclxuICAgICAgICAgICAgICAgIGZvbnQtc2l6ZTogMTBwdDtcclxuICAgICAgICAgICAgICAgIGNvbG9yOiAjODRiMTNmO1xyXG5cclxuICAgICAgICAgICAgICAgIGltZyB7XHJcbiAgICAgICAgICAgICAgICAgICAgaGVpZ2h0OiAxM3B4O1xyXG4gICAgICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgfVxyXG5cclxuICAgICAgICBuYXYudXNlcnNfcGFnZV9zZWFyY2gge1xyXG4gICAgICAgICAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICAgICAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogIzAzNjU4QztcclxuXHJcbiAgICAgICAgICAgIGlucHV0IHtcclxuICAgICAgICAgICAgICAgIHdpZHRoOiA0MzBweDtcclxuICAgICAgICAgICAgICAgIGJvcmRlcjogbm9uZTtcclxuICAgICAgICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDUwcHg7XHJcbiAgICAgICAgICAgICAgICBtYXJnaW46IDdweDtcclxuICAgICAgICAgICAgICAgIHBhZGRpbmc6IDEwcHg7XHJcbiAgICAgICAgICAgICAgICBib3gtc2l6aW5nOiBib3JkZXItYm94O1xyXG5cclxuICAgICAgICAgICAgICAgICY6Oi13ZWJraXQtaW5wdXQtcGxhY2Vob2xkZXIge1xyXG4gICAgICAgICAgICAgICAgICAgIGZvbnQtc3R5bGU6IGl0YWxpYztcclxuICAgICAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgfVxyXG4gICAgICAgIH1cclxuICAgIH1cclxuXHJcbiAgICBtYWluIHtcclxuICAgICAgICBoZWlnaHQ6IDEwMCU7XHJcbiAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogI0U2RTZFNjtcclxuICAgIH1cclxufVxyXG4iXX0= */"
+module.exports = ".users_page_container {\n  height: 100%; }\n  .users_page_container header {\n    width: 100%; }\n  .users_page_container header nav {\n      height: 48px; }\n  .users_page_container header nav.users_page_navigation {\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      background-color: #F1F2EB;\n      padding: 0 12px; }\n  .users_page_container header nav.users_page_navigation > img {\n        height: 20px; }\n  .users_page_container header nav.users_page_navigation > img:hover {\n          cursor: pointer; }\n  .users_page_container header nav.users_page_navigation a {\n        font-size: 10pt;\n        color: #84b13f; }\n  .users_page_container header nav.users_page_navigation a img {\n          height: 13px; }\n  .users_page_container header nav.users_page_search {\n      display: flex;\n      justify-content: center;\n      background-color: #03658C; }\n  .users_page_container header nav.users_page_search input {\n        width: 430px;\n        border: none;\n        border-radius: 50px;\n        margin: 7px;\n        padding: 10px;\n        box-sizing: border-box; }\n  .users_page_container header nav.users_page_search input::-webkit-input-placeholder {\n          font-style: italic; }\n  .users_page_container header nav.user_details_navigation {\n      display: flex;\n      align-items: center;\n      padding-left: 12px; }\n  .users_page_container header nav.user_details_navigation .arrow_back {\n        margin-right: 12px;\n        font-size: 18pt;\n        font-weight: 900; }\n  .users_page_container header nav.user_details_navigation .arrow_back:hover {\n          cursor: pointer; }\n  .users_page_container header nav.user_details_navigation .user_name {\n        font-size: 12pt;\n        font-weight: 600; }\n  .users_page_container header nav.user_details_navigation img {\n        height: 30px;\n        border: 3px solid #049DBF;\n        margin-right: 12px; }\n  .users_page_container main {\n    height: 100%;\n    background-color: #E6E6E6; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvdXNlcnMtcGFnZS9FOlxcV0VCXFxUZXN0X3Rhc2tzXFxzZWN1cmUtZW5jb3VudGVyL3NyY1xcYXBwXFxwYWdlc1xcdXNlcnMtcGFnZVxcdXNlcnMtcGFnZS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLFlBQVksRUFBQTtFQURoQjtJQUlRLFdBQVcsRUFBQTtFQUpuQjtNQU9ZLFlBQVksRUFBQTtFQVB4QjtNQVdZLGFBQWE7TUFDYiw4QkFBOEI7TUFDOUIsbUJBQW1CO01BQ25CLHlCQUF5QjtNQUN6QixlQUFlLEVBQUE7RUFmM0I7UUFrQmdCLFlBQVksRUFBQTtFQWxCNUI7VUFxQm9CLGVBQWUsRUFBQTtFQXJCbkM7UUEwQmdCLGVBQWU7UUFDZixjQUFjLEVBQUE7RUEzQjlCO1VBOEJvQixZQUFZLEVBQUE7RUE5QmhDO01Bb0NZLGFBQWE7TUFDYix1QkFBdUI7TUFDdkIseUJBQXlCLEVBQUE7RUF0Q3JDO1FBeUNnQixZQUFZO1FBQ1osWUFBWTtRQUNaLG1CQUFtQjtRQUNuQixXQUFXO1FBQ1gsYUFBYTtRQUNiLHNCQUFzQixFQUFBO0VBOUN0QztVQWlEb0Isa0JBQWtCLEVBQUE7RUFqRHRDO01BdURZLGFBQWE7TUFDYixtQkFBbUI7TUFDbkIsa0JBQWtCLEVBQUE7RUF6RDlCO1FBNERnQixrQkFBa0I7UUFDbEIsZUFBZTtRQUNmLGdCQUFnQixFQUFBO0VBOURoQztVQWlFb0IsZUFBZSxFQUFBO0VBakVuQztRQXNFZ0IsZUFBZTtRQUNmLGdCQUFnQixFQUFBO0VBdkVoQztRQTJFZ0IsWUFBWTtRQUNaLHlCQUF5QjtRQUN6QixrQkFBa0IsRUFBQTtFQTdFbEM7SUFtRlEsWUFBWTtJQUNaLHlCQUF5QixFQUFBIiwiZmlsZSI6InNyYy9hcHAvcGFnZXMvdXNlcnMtcGFnZS91c2Vycy1wYWdlLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLnVzZXJzX3BhZ2VfY29udGFpbmVyIHtcclxuICAgIGhlaWdodDogMTAwJTtcclxuXHJcbiAgICBoZWFkZXIge1xyXG4gICAgICAgIHdpZHRoOiAxMDAlO1xyXG5cclxuICAgICAgICBuYXYge1xyXG4gICAgICAgICAgICBoZWlnaHQ6IDQ4cHg7XHJcbiAgICAgICAgfVxyXG5cclxuICAgICAgICBuYXYudXNlcnNfcGFnZV9uYXZpZ2F0aW9uIHtcclxuICAgICAgICAgICAgZGlzcGxheTogZmxleDtcclxuICAgICAgICAgICAganVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuO1xyXG4gICAgICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gICAgICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjRjFGMkVCO1xyXG4gICAgICAgICAgICBwYWRkaW5nOiAwIDEycHg7XHJcblxyXG4gICAgICAgICAgICAmID4gaW1nIHtcclxuICAgICAgICAgICAgICAgIGhlaWdodDogMjBweDtcclxuICAgICAgICAgICAgXHJcbiAgICAgICAgICAgICAgICAmOmhvdmVyIHtcclxuICAgICAgICAgICAgICAgICAgICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgIH1cclxuXHJcbiAgICAgICAgICAgIGEge1xyXG4gICAgICAgICAgICAgICAgZm9udC1zaXplOiAxMHB0O1xyXG4gICAgICAgICAgICAgICAgY29sb3I6ICM4NGIxM2Y7XHJcblxyXG4gICAgICAgICAgICAgICAgaW1nIHtcclxuICAgICAgICAgICAgICAgICAgICBoZWlnaHQ6IDEzcHg7XHJcbiAgICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICB9XHJcblxyXG4gICAgICAgIG5hdi51c2Vyc19wYWdlX3NlYXJjaCB7XHJcbiAgICAgICAgICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICAgICAgICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG4gICAgICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjMDM2NThDO1xyXG5cclxuICAgICAgICAgICAgaW5wdXQge1xyXG4gICAgICAgICAgICAgICAgd2lkdGg6IDQzMHB4O1xyXG4gICAgICAgICAgICAgICAgYm9yZGVyOiBub25lO1xyXG4gICAgICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogNTBweDtcclxuICAgICAgICAgICAgICAgIG1hcmdpbjogN3B4O1xyXG4gICAgICAgICAgICAgICAgcGFkZGluZzogMTBweDtcclxuICAgICAgICAgICAgICAgIGJveC1zaXppbmc6IGJvcmRlci1ib3g7XHJcblxyXG4gICAgICAgICAgICAgICAgJjo6LXdlYmtpdC1pbnB1dC1wbGFjZWhvbGRlciB7XHJcbiAgICAgICAgICAgICAgICAgICAgZm9udC1zdHlsZTogaXRhbGljO1xyXG4gICAgICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgfVxyXG5cclxuICAgICAgICBuYXYudXNlcl9kZXRhaWxzX25hdmlnYXRpb24ge1xyXG4gICAgICAgICAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gICAgICAgICAgICBwYWRkaW5nLWxlZnQ6IDEycHg7XHJcblxyXG4gICAgICAgICAgICAuYXJyb3dfYmFjayB7XHJcbiAgICAgICAgICAgICAgICBtYXJnaW4tcmlnaHQ6IDEycHg7XHJcbiAgICAgICAgICAgICAgICBmb250LXNpemU6IDE4cHQ7XHJcbiAgICAgICAgICAgICAgICBmb250LXdlaWdodDogOTAwO1xyXG5cclxuICAgICAgICAgICAgICAgICY6aG92ZXIge1xyXG4gICAgICAgICAgICAgICAgICAgIGN1cnNvcjogcG9pbnRlcjtcclxuICAgICAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICBcclxuICAgICAgICAgICAgLnVzZXJfbmFtZSB7XHJcbiAgICAgICAgICAgICAgICBmb250LXNpemU6IDEycHQ7XHJcbiAgICAgICAgICAgICAgICBmb250LXdlaWdodDogNjAwO1xyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICAgIFxyXG4gICAgICAgICAgICBpbWcge1xyXG4gICAgICAgICAgICAgICAgaGVpZ2h0OiAzMHB4O1xyXG4gICAgICAgICAgICAgICAgYm9yZGVyOiAzcHggc29saWQgIzA0OURCRjtcclxuICAgICAgICAgICAgICAgIG1hcmdpbi1yaWdodDogMTJweDtcclxuICAgICAgICAgICAgfVxyXG4gICAgICAgIH1cclxuICAgIH1cclxuXHJcbiAgICBtYWluIHtcclxuICAgICAgICBoZWlnaHQ6IDEwMCU7XHJcbiAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogI0U2RTZFNjtcclxuICAgIH1cclxufVxyXG4iXX0= */"
 
 /***/ }),
 
@@ -627,6 +631,9 @@ var UsersComponent = /** @class */ (function () {
                 _this.currentUser = _this.userPageService.selectedUser;
             }
         });
+    };
+    UsersComponent.prototype.goBack = function () {
+        this.router.navigate(['/users/list']);
     };
     UsersComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -667,6 +674,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var UsersPageService = /** @class */ (function () {
     function UsersPageService(http, authService, router) {
         this.http = http;
@@ -674,7 +682,18 @@ var UsersPageService = /** @class */ (function () {
         this.router = router;
     }
     UsersPageService.prototype.getPatientsList = function () {
-        return this.http.get(src_app_shared_configuration_config__WEBPACK_IMPORTED_MODULE_2__["BASE_PATIENTS_LIST_URL"], this.getHeaders());
+        return this.http.get(src_app_shared_configuration_config__WEBPACK_IMPORTED_MODULE_2__["BASE_PATIENTS_LIST_URL"], {
+            headers: this.getHeaders(),
+            params: this.getParams()
+        });
+    };
+    UsersPageService.prototype.getAppointmentsList = function () {
+        return this.http.post(src_app_shared_configuration_config__WEBPACK_IMPORTED_MODULE_2__["BASE_APPOINTMENTS_LIST_URL"], {
+            date: new Date().toISOString(),
+            status: '1'
+        }, {
+            headers: this.getHeaders()
+        });
     };
     UsersPageService.prototype.openUserDetails = function (user) {
         this.selectedUser = user;
@@ -685,11 +704,17 @@ var UsersPageService = /** @class */ (function () {
         this.router.navigate(['/users/list']);
     };
     UsersPageService.prototype.getHeaders = function () {
-        return {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpHeaders"]({
-                'Authorization': 'Bearer ' + this.authService.getJWT()
-            })
-        };
+        return new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpHeaders"]({
+            Authorization: 'Bearer ' + this.authService.getJWT()
+        });
+    };
+    UsersPageService.prototype.getParams = function () {
+        return new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpParams"]({
+            fromObject: {
+                maximumRows: '6',
+                startRowIndex: '0'
+            }
+        });
     };
     UsersPageService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
@@ -708,16 +733,20 @@ var UsersPageService = /** @class */ (function () {
 /*!************************************************!*\
   !*** ./src/app/shared/configuration/config.ts ***!
   \************************************************/
-/*! exports provided: BASE_AUTH_URL, BASE_PATIENTS_LIST_URL, DEFAULT_AUTH_LOCATION_VALUE */
+/*! exports provided: BASE_API_URL, BASE_AUTH_URL, BASE_PATIENTS_LIST_URL, BASE_APPOINTMENTS_LIST_URL, DEFAULT_AUTH_LOCATION_VALUE */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BASE_API_URL", function() { return BASE_API_URL; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BASE_AUTH_URL", function() { return BASE_AUTH_URL; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BASE_PATIENTS_LIST_URL", function() { return BASE_PATIENTS_LIST_URL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BASE_APPOINTMENTS_LIST_URL", function() { return BASE_APPOINTMENTS_LIST_URL; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DEFAULT_AUTH_LOCATION_VALUE", function() { return DEFAULT_AUTH_LOCATION_VALUE; });
-var BASE_AUTH_URL = 'http://jerichocentral.quickpractice.com:9876/JerichoCentralAPI/api/Token/Authenticate';
-var BASE_PATIENTS_LIST_URL = 'http://jerichocentral.quickpractice.com:9876/JerichoCentralAPI/api/Patients';
+var BASE_API_URL = 'http://jerichocentral.quickpractice.com:9876/JerichoCentralAPI/api/';
+var BASE_AUTH_URL = BASE_API_URL + 'Token/Authenticate';
+var BASE_PATIENTS_LIST_URL = BASE_API_URL + 'Patients';
+var BASE_APPOINTMENTS_LIST_URL = BASE_API_URL + 'Appointments';
 var DEFAULT_AUTH_LOCATION_VALUE = 0;
 
 

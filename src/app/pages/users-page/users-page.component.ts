@@ -24,4 +24,8 @@ export class UsersComponent implements OnInit {
             }
         });
     }
+
+    public goBack(): void {
+        this.router.navigate(['/users/list']);
+    }
 }
